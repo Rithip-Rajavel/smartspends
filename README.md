@@ -1,97 +1,202 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# SmartSpends - Personal Finance Advisor
 
-# Getting Started
+SmartSpends is a comprehensive React Native mobile application designed to help individuals manage their monthly income and expenses more effectively. The app focuses on identifying and reducing unnecessary spending to increase monthly savings while providing intelligent investment guidance.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 🚀 Features
 
-## Step 1: Start Metro
+### Core Functionality
+- **Expense Tracking**: Track user spending with automatic categorization and payment mode detection
+- **Savings Analysis**: Analyze salary against expenses to provide insights on savings opportunities
+- **Investment Guidance**: Get statistical investment suggestions based on available surplus
+- **Behavioral Comparison**: Month-over-month financial habit comparisons with detailed analytics
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### Key Features
+- **Financial Dashboard**: Centralized view of financial status with interactive charts
+- **Quick-Entry Widget**: Screen widget for rapid expense logging without opening the full app
+- **Automated Context**: Automatic date/time capture for seamless user experience
+- **Multi-Category Support**: 7 expense categories (Food, Transport, Entertainment, Bills, Shopping, Healthcare, Miscellaneous)
+- **Payment Mode Tracking**: Support for Cash, Card, UPI, Net Banking, and Other payment methods
+- **Authentication**: Secure user registration and login system
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## 🛠 Tech Stack
 
-```sh
-# Using npm
-npm start
+### Frontend
+- **React Native** (0.84.0) - Cross-platform mobile development
+- **TypeScript** - Type-safe development
+- **React Native Paper** - Material Design UI components
+- **React Navigation** - Navigation and routing
+- **React Native Element Dropdown** - Custom dropdown components
+- **React Native Chart Kit** - Interactive charts and graphs
+- **React Native Vector Icons** - Icon library
+- **React Native Async Storage** - Local data persistence
 
-# OR using Yarn
-yarn start
+### Backend Integration
+- **Axios** - HTTP client for API communication
+- **RESTful API** - Complete CRUD operations for incomes, expenses, and savings
+
+## 📱 Screens & Navigation
+
+### Authentication Flow
+- Login Screen
+- Registration Screen
+
+### Main Navigation (Bottom Tabs)
+- **Dashboard**: Financial overview with charts and quick stats
+- **Income**: Manage income sources and track earnings
+- **Expenses**: Track and categorize expenses with filtering
+- **Savings**: View savings analysis and investment recommendations
+- **Comparison**: Month-over-month financial comparisons
+
+### Additional Screens
+- Add/Edit Income
+- Add/Edit Expense
+- Income/Expense Details
+- Investment Recommendations
+
+## 🏗 Project Structure
+
+```
+src/
+├── api/                    # API service layer
+│   ├── axiosConfig.ts     # Axios configuration
+│   ├── authService.ts     # Authentication services
+│   ├── incomeService.ts   # Income management
+│   ├── expenseService.ts  # Expense management
+│   ├── savingsService.ts  # Savings & investments
+│   └── dashboardService.ts # Dashboard data
+├── components/            # Reusable UI components
+├── context/              # React Context providers
+│   └── AuthContext.tsx   # Authentication context
+├── navigation/           # Navigation configuration
+│   └── AppNavigator.tsx  # Main navigation setup
+├── screens/             # Screen components
+│   ├── Auth/           # Authentication screens
+│   ├── Dashboard/      # Dashboard screen
+│   ├── Income/         # Income management
+│   ├── Expenses/       # Expense management
+│   ├── Savings/        # Savings & investments
+│   └── Comparison/     # Financial comparisons
+├── types/              # TypeScript type definitions
+│   └── index.ts       # Main types file
+├── utils/             # Utility functions
+└── widgets/           # Custom widgets
+    └── QuickExpenseWidget.tsx  # Quick expense entry widget
 ```
 
-## Step 2: Build and run your app
+## 🚀 Getting Started
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Prerequisites
+- Node.js (>= 22.11.0)
+- React Native development environment
+- Android Studio / Xcode (for mobile development)
 
-### Android
+### Installation
 
-```sh
-# Using npm
-npm run android
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd smartspends
+   ```
 
-# OR using Yarn
-yarn android
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **iOS Setup (if developing for iOS)**
+   ```bash
+   cd ios
+   bundle install
+   bundle exec pod install
+   cd ..
+   ```
+
+4. **Start Metro**
+   ```bash
+   npm start
+   ```
+
+5. **Run the application**
+   ```bash
+   # For Android
+   npm run android
+   
+   # For iOS
+   npm run ios
+   ```
+
+## 🔧 Configuration
+
+### API Configuration
+Update the API base URL in `src/api/axiosConfig.ts`:
+```typescript
+const API_BASE_URL = 'http://localhost:5012'; // Update to your API URL
 ```
 
-### iOS
+### Environment Variables
+Create environment-specific configuration files as needed for different deployment environments.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## 📊 API Integration
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+The app integrates with a comprehensive RESTful API supporting:
 
-```sh
-bundle install
-```
+- **Authentication**: Login, registration, token management
+- **Income Management**: CRUD operations for income entries
+- **Expense Management**: CRUD operations with categorization
+- **Savings Analysis**: Monthly summaries and recommendations
+- **Dashboard Data**: Real-time financial overview
+- **Monthly Comparisons**: Period-over-period analysis
 
-Then, and every time you update your native dependencies, run:
+## 🎨 UI/UX Features
 
-```sh
-bundle exec pod install
-```
+- **Material Design**: Consistent Material Design 3 components
+- **Dark Mode Support**: Automatic theme detection
+- **Responsive Layout**: Optimized for various screen sizes
+- **Interactive Charts**: Pie charts, bar charts, and line graphs
+- **Smooth Animations**: Fluid transitions and micro-interactions
+- **Accessibility**: Screen reader support and semantic components
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## 🔒 Security Features
 
-```sh
-# Using npm
-npm run ios
+- **JWT Authentication**: Secure token-based authentication
+- **Local Storage Encryption**: Sensitive data protection
+- **Input Validation**: Client-side and server-side validation
+- **Error Handling**: Comprehensive error management
 
-# OR using Yarn
-yarn ios
-```
+## 🚦 Quick-Entry Widget
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+The app includes a custom widget for rapid expense tracking:
+- **Minimal Interface**: Quick amount entry with category selection
+- **Auto-Timestamping**: Automatic date/time capture
+- **Category Shortcuts**: Frequently used categories
+- **Payment Mode Selection**: Quick payment method selection
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 📈 Analytics & Insights
 
-## Step 3: Modify your app
+- **Spending Patterns**: AI-powered spending analysis
+- **Savings Trends**: Historical savings visualization
+- **Investment Recommendations**: Risk-based investment suggestions
+- **Financial Health Score**: Overall financial wellness indicator
 
-Now that you have successfully run the app, let's make changes!
+## 🤝 Contributing
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 📝 License
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Congratulations! :tada:
+## 🆘 Support
 
-You've successfully run and modified your React Native App. :partying_face:
+For support and questions:
+- Create an issue in the GitHub repository
+- Check the documentation
+- Review the API documentation for backend integration
 
-### Now what?
+---
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+**SmartSpends** - Your intelligent personal finance companion! 💰📱
