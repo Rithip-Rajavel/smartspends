@@ -172,8 +172,10 @@ const ComparisonScreen = () => {
           <Title style={styles.chartTitle}>Monthly Overview</Title>
           <BarChart
             data={monthlyComparisonData}
-            width={screenWidth - 40}
+            width={screenWidth - 80}
             height={220}
+            yAxisLabel="₹"
+            yAxisSuffix=""
             chartConfig={{
               backgroundColor: '#ffffff',
               backgroundGradientFrom: '#ffffff',

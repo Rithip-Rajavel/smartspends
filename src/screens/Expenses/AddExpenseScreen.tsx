@@ -13,7 +13,7 @@ import {
   Title,
   ActivityIndicator,
 } from 'react-native-paper';
-import Dropdown from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { expenseService } from '../../api';
 import { ExpenseRequestDTO, ExpenseCategory, PaymentMode } from '../../types';
@@ -30,7 +30,8 @@ const AddExpenseScreen = () => {
   
   const navigation = useNavigation();
   const route = useRoute();
-  const isEditing = route.params?.expenseId;
+  const routeParams = route.params as { expenseId?: number } | undefined;
+  const isEditing = routeParams?.expenseId;
 
   const categories = Object.values(ExpenseCategory);
   const paymentModes = Object.values(PaymentMode);
@@ -59,8 +60,8 @@ const AddExpenseScreen = () => {
 
     setIsLoading(true);
     try {
-      if (isEditing) {
-        await expenseService.updateExpense(route.params.expenseId, formData);
+      if (isEditing && routeParams?.expenseId) {
+        await expenseService.updateExpense(routeParams.expenseId, formData);
         Alert.alert('Success', 'Expense updated successfully');
       } else {
         await expenseService.addExpense(formData);

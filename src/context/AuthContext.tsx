@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { authService } from '../api';
+import { NativeModules } from 'react-native';
+
+const { SharedPrefsModule } = NativeModules;
 
 interface User {
   id: number;
@@ -50,12 +53,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await authService.login({ mobileNumber, password });
       
-      if (response.token) {
-        await authService.setToken(response.token);
-        if (response.user) {
-          await authService.setUser(response.user);
-          setUser(response.user);
-        }
+      const payload = response.data || response;
+      if (payload && payload.token) {
+        await authService.setToken(payload.token);
+        SharedPrefsModule?.setToken(payload.token);
+        
+        const userData = payload.user || {
+          id: payload.id || Date.now(),
+          username: payload.username || 'User',
+          mobileNumber: payload.mobileNumber || mobileNumber,
+          email: payload.email,
+          role: payload.role
+        };
+        
+        await authService.setUser(userData);
+        setUser(userData);
+      } else {
+        throw new Error(response.message || 'Login failed: No token received');
       }
     } catch (error) {
       console.error('Login failed:', error);
@@ -67,12 +81,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await authService.register(userData);
       
-      if (response.token) {
-        await authService.setToken(response.token);
-        if (response.user) {
-          await authService.setUser(response.user);
-          setUser(response.user);
-        }
+      const payload = response.data || response;
+      if (payload && payload.token) {
+        await authService.setToken(payload.token);
+        SharedPrefsModule?.setToken(payload.token);
+        
+        const registeredUser = payload.user || {
+          id: payload.id || Date.now(),
+          username: payload.username || userData.username || 'User',
+          mobileNumber: payload.mobileNumber || userData.mobileNumber,
+          email: payload.email || userData.email,
+          role: payload.role || 'USER'
+        };
+        
+        await authService.setUser(registeredUser);
+        setUser(registeredUser);
+      } else {
+        throw new Error(response.message || 'Registration failed: No token received');
       }
     } catch (error) {
       console.error('Registration failed:', error);
@@ -83,6 +108,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     try {
       await authService.logout();
+      SharedPrefsModule?.clearToken();
       setUser(null);
     } catch (error) {
       console.error('Logout failed:', error);

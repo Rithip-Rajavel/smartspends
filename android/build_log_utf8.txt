@@ -1,0 +1,50 @@
+﻿.gradle.internal.proces
+s.GradleProcessResult.a
+ssertNormalExitValue(Gr
+adleProcessResult.java:
+48)
+  	at com.android.build
+.gradle.internal.cxx.pr
+ocess.ExecuteProcessKt.
+execute(ExecuteProcess.
+kt:277)
+  	... 142 more
+  Caused by: org.gradle
+.process.ProcessExecuti
+onException: Process 
+'command 'C:\Users\rith
+i\AppData\Local\Android
+\Sdk\cmake\3.22.1\bin\c
+make.exe'' finished 
+with non-zero exit 
+value 1
+  	at org.gradle.proces
+s.internal.DefaultExecH
+andle$ExecResultImpl.as
+sertNormalExitValue(Def
+aultExecHandle.java:443
+)
+  	at com.android.build
+.gradle.internal.proces
+s.GradleProcessResult.a
+ssertNormalExitValue(Gr
+adleProcessResult.java:
+46)
+  	... 143 more
+
+
+* Try:
+> Run with 
+--stacktrace option to 
+get the stack trace.
+> Run with --info or 
+--debug option to get 
+more log output.
+> Run with --scan to 
+generate a Build Scan 
+(Powered by 
+Develocity).
+> Get more help at http
+s://help.gradle.org.
+
+BUILD FAILED in 6s

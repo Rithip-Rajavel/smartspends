@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import {
   Card,
@@ -14,6 +15,7 @@ import {
   FAB,
   ActivityIndicator,
   Surface,
+  IconButton,
 } from 'react-native-paper';
 import { PieChart, BarChart } from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -21,6 +23,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 import { dashboardService } from '../../api';
+import { useAuth } from '../../context/AuthContext';
 import { Dashboard } from '../../types';
 import {
   wp,
@@ -39,6 +42,7 @@ const DashboardScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { logout } = useAuth();
 
   useEffect(() => {
     loadDashboardData();
@@ -59,6 +63,23 @@ const DashboardScreen = () => {
   const onRefresh = () => {
     setRefreshing(true);
     loadDashboardData();
+  };
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Logout', 
+          style: 'destructive', 
+          onPress: async () => {
+            await logout();
+          } 
+        },
+      ]
+    );
   };
 
   const pieChartData = dashboardData?.expenseBreakdown.map(item => ({
@@ -93,10 +114,19 @@ const DashboardScreen = () => {
       }
     >
       <View style={styles.header}>
-        <Title style={styles.headerTitle}>Financial Dashboard</Title>
-        <Paragraph style={styles.headerSubtitle}>
-          Welcome back! Here's your financial overview
-        </Paragraph>
+        <View style={styles.headerTextContainer}>
+          <Title style={styles.headerTitle}>Financial Dashboard</Title>
+          <Paragraph style={styles.headerSubtitle}>
+            Welcome back! Here's your financial overview
+          </Paragraph>
+        </View>
+        <IconButton 
+          icon="logout" 
+          iconColor="#f44336" 
+          size={24} 
+          onPress={handleLogout}
+          style={styles.logoutButton}
+        />
       </View>
 
       {/* Summary Cards */}
@@ -133,16 +163,15 @@ const DashboardScreen = () => {
           {pieChartData.length > 0 ? (
             <PieChart
               data={pieChartData}
-              width={chartDimensions.width}
-              height={chartDimensions.pieChartSize}
+              width={chartDimensions.width - 40}
+              height={chartDimensions.pieChartSize - 40}
               chartConfig={{
                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               }}
               accessor="population"
               backgroundColor="transparent"
               paddingLeft="15"
-              center={[10, 10]}
-              absolute
+              center={[0, 0]}
             />
           ) : (
             <Text style={styles.noDataText}>No expense data available</Text>
@@ -244,7 +273,8 @@ const DashboardScreen = () => {
 
       <FAB
         style={styles.fab}
-        icon="add"
+        icon="plus"
+        color='white'
         onPress={() => navigation.navigate('AddExpense' as any)}
       />
     </ScrollView>
@@ -281,8 +311,17 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   header: {
+    flexDirection: 'row',
     padding: spacing.lg,
+    paddingTop: spacing.md,
     alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerTextContainer: {
+    flex: 1,
+  },
+  logoutButton: {
+    margin: 0,
   },
   headerTitle: {
     fontSize: fontSizes['3xl'],
@@ -290,9 +329,8 @@ const styles = StyleSheet.create({
     color: '#6200ee',
   },
   headerSubtitle: {
-    textAlign: 'center',
     color: '#666',
-    marginTop: spacing.xs,
+    marginTop: 2,
   },
   summaryContainer: {
     flexDirection: 'row',

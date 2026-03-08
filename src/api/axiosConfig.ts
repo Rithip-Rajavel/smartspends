@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE_URL = 'http://localhost:5012';
+const API_BASE_URL = 'https://app.undefineddevelopers.online/smartspends';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
